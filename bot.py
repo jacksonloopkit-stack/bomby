@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 
 # Проверяем, что всё загружено
 if not BOT_TOKEN or not OPENROUTER_API_KEY:
-    raise ValueError("❌ Проверь .env файл! Отсутствует BOT_TOKEN или OPENROUTER_API_KEY.")
+    raise ValueError("Проверь .env файл! Отсутствует BOT_TOKEN или OPENROUTER_API_KEY.")
 
 # Настройки OpenRouter
 BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
@@ -46,7 +46,7 @@ async def ask_llm(user_message):
             if response.status == 200 and "choices" in data:
                 return data["choices"][0]["message"]["content"]
             else:
-                return f"❌ Ошибка LLM:\nStatus: {response.status}\n{data}"
+                return f"Ошибка LLM:\nStatus: {response.status}\n{data}"
 
 # Создаём экземпляры бота и диспетчера
 bot = Bot(token=BOT_TOKEN)
@@ -55,7 +55,7 @@ dp = Dispatcher()
 # /start
 @dp.message(Command("start"))
 async def start_handler(message: Message):
-    await message.answer("Привет! Я AI-бот. Напиши мне сообщение — и я спрошу у LLM 💬")
+    await message.answer("Привет! Я AI-бот. Напиши мне сообщение — и я спрошу у LLM")
 
 # /help
 @dp.message(Command("help"))
@@ -74,4 +74,5 @@ async def main():
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
+
     asyncio.run(main())
